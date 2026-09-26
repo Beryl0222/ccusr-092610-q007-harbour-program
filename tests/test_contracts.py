@@ -36,6 +36,32 @@ class ContractTests(unittest.TestCase):
         issues = validate_event(dict(self.sample, event_type="UNKNOWN"), self.schema)
         self.assertIn(("event_type", "unsupported_value"), [(x.field, x.code) for x in issues])
 
+    def test_attendance_payload_requires_receipt_fields(self) -> None:
+        event = dict(self.sample, event_type="ATTENDANCE_CONFIRMED", payload={"city": "南京"})
+        fields = {x.field for x in validate_event(event, self.schema)}
+        self.assertIn("payload.receipt_id", fields)
+        self.assertIn("payload.content_hash", fields)
+
+    def test_change_reviewed_payload_requires_decision(self) -> None:
+        event = dict(self.sample, event_type="CHANGE_REVIEWED", payload={"change_id": "chg-1"})
+        self.assertIn(("payload.decision", "required"), [(x.field, x.code) for x in validate_event(event, self.schema)])
+
+    def test_new_event_types_are_registered(self) -> None:
+        event = dict(
+            self.sample,
+            event_type="SLOT_DEFINED",
+            aggregate_type="venue_slot",
+            payload={
+                "venue": "香港文化中心",
+                "tz": "Asia/Hong_Kong",
+                "load_in_start": "2026-09-30T21:00:00+08:00",
+                "show_start": "2026-09-30T23:00:00+08:00",
+                "show_end": "2026-10-01T00:30:00+08:00",
+                "load_out_end": "2026-10-01T02:00:00+08:00",
+            },
+        )
+        self.assertEqual([], validate_event(event, self.schema))
+
 
 if __name__ == "__main__":
     unittest.main()

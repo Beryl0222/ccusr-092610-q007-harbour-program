@@ -19,11 +19,22 @@
     "event_type": {
       "type": "string",
       "enum": [
+        "PROGRAM_REGISTERED",
         "PROGRAM_CHANGED",
+        "SLOT_DEFINED",
+        "SHOW_OPENED",
         "ATTENDANCE_CONFIRMED",
+        "ATTENDANCE_DRIFTED",
         "RESOURCE_HELD",
+        "EQUIPMENT_CONFIRMED",
+        "RESOURCE_RELEASED",
+        "COST_COMMITTED",
         "SHOW_FROZEN",
-        "CHANGE_REVIEWED"
+        "PERFORMANCE_RECORDED",
+        "CHANGE_OPENED",
+        "CHANGE_REVIEWED",
+        "CHANGE_RESUMED",
+        "CHANGE_CLOSED"
       ]
     },
     "aggregate_type": {
@@ -52,17 +63,76 @@
     }
   },
   "payload_required_by_event": {
+    "PROGRAM_REGISTERED": [
+      "city",
+      "title",
+      "revision",
+      "content_hash"
+    ],
     "PROGRAM_CHANGED": [
       "supersedes",
       "reason"
+    ],
+    "SLOT_DEFINED": [
+      "venue",
+      "tz",
+      "load_in_start",
+      "show_start",
+      "show_end",
+      "load_out_end"
+    ],
+    "SHOW_OPENED": [
+      "slot_id",
+      "order"
+    ],
+    "ATTENDANCE_CONFIRMED": [
+      "receipt_id",
+      "program_id",
+      "revision",
+      "content_hash",
+      "city"
+    ],
+    "ATTENDANCE_DRIFTED": [
+      "receipt_id",
+      "program_id"
     ],
     "RESOURCE_HELD": [
       "resource_ref",
       "slot"
     ],
+    "EQUIPMENT_CONFIRMED": [
+      "confirmed_by"
+    ],
+    "RESOURCE_RELEASED": [
+      "reason"
+    ],
+    "COST_COMMITTED": [
+      "program_id",
+      "amount",
+      "currency"
+    ],
     "SHOW_FROZEN": [
       "revision",
       "frozen_at"
+    ],
+    "PERFORMANCE_RECORDED": [
+      "program_id",
+      "revision"
+    ],
+    "CHANGE_OPENED": [
+      "change_id",
+      "description"
+    ],
+    "CHANGE_REVIEWED": [
+      "change_id",
+      "decision"
+    ],
+    "CHANGE_RESUMED": [
+      "change_id"
+    ],
+    "CHANGE_CLOSED": [
+      "change_id",
+      "outcome"
     ]
   },
   "additionalProperties": false
