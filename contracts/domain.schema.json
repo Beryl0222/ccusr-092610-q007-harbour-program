@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "香港节庆节目资源锁定账领域事件",
+  "type": "object",
+  "required": [
+    "event_id",
+    "event_type",
+    "aggregate_type",
+    "aggregate_id",
+    "occurred_at",
+    "version",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "PROGRAM_CHANGED",
+        "ATTENDANCE_CONFIRMED",
+        "RESOURCE_HELD",
+        "SHOW_FROZEN",
+        "CHANGE_REVIEWED"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "program_revision",
+        "venue_slot",
+        "resource_claim",
+        "show_record"
+      ]
+    },
+    "aggregate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "payload_required_by_event": {
+    "PROGRAM_CHANGED": [
+      "supersedes",
+      "reason"
+    ],
+    "RESOURCE_HELD": [
+      "resource_ref",
+      "slot"
+    ],
+    "SHOW_FROZEN": [
+      "revision",
+      "frozen_at"
+    ]
+  },
+  "additionalProperties": false
+}

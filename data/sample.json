@@ -1,0 +1,12 @@
+{
+  "event_id": "092601-007-sample-001",
+  "event_type": "PROGRAM_CHANGED",
+  "aggregate_type": "program_revision",
+  "aggregate_id": "harbour_program-001",
+  "occurred_at": "2026-09-25T10:00:00+08:00",
+  "version": 1,
+  "payload": {
+    "supersedes": "sample-supersedes",
+    "reason": "sample-reason"
+  }
+}
